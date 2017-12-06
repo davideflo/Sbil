@@ -12,6 +12,7 @@ zona = ''
 import Sbilanciamento10 as FF
 import datetime
 import pandas as pd
+import matplotlib.pyplot as plt
 
 #sos = pd.read_hdf("C:/Users/utente/Documents/Sbilanciamento/sos_elaborati_finiti.h5")
 sos = pd.read_excel("C:/Users/utente/Documents/Sbilanciamento/sos_elaborati_finiti.xlsx")
@@ -32,7 +33,7 @@ db = db[["POD", "Area", "Giorno", "1","2","3","4","5","6","7","8","9","10","11",
 db = db.drop_duplicates(subset = ['POD', 'Area', 'Giorno'], keep = 'last')
 
 #dtf = dts = [datetime.date(2017,11,1),datetime.date(2017,11,2)]
-dtf = dts = [datetime.date(2017,12,1)]
+dtf = dts = [datetime.date(2017,12,8)]
 
 
 for d in dtf:
@@ -58,9 +59,11 @@ for d in dtf:
     if not d.weekday() in [5,6]:
         proposal = FF.Adjust_Peaks(proposal, db, d, zona)
     
+    plt.plot(proposal)
+    plt.plot(proposal + Pred.sum().values.ravel()/1000)
     
     FF.Saver(Pred, proposal, zona, d, db)
 
-FF.Saver(Pred, proposal, zona, dts[0], db)
-FF.Saver(Pred, proposal, zona, dts[1], db)
-FF.Saver(Pred, proposal, zona, dts[2], db)
+#FF.Saver(Pred, proposal, zona, dts[0], db)
+#FF.Saver(Pred, proposal, zona, dts[1], db)
+#FF.Saver(Pred, proposal, zona, dts[2], db)
