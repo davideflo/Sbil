@@ -732,6 +732,7 @@ def PredictOOS_Base(pdo, sos, rical, db, zona, dts):
         crpp_oos = crpp.ix[crpp['Trattamento_' + strm] == 'O']
         podlist = list(set(crpp_oos['POD'].values.ravel().tolist()).difference(set(db['POD'].ix[db['Giorno'] == max(db['Giorno'])])))
         for p in podlist:
+            print p in rical.columns
             pred = Taker(rical, pdo, sos, p, d)
             
             if len(pred) < 26:                

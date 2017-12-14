@@ -1199,10 +1199,10 @@ def ToTS_fr(df):
 def InferMissingDays(df2, zona, crpp, db, rid2):
 #    year = df2.Giorno[0].year
 #    month = df2.Giorno[0].month
-    pod = df2['POD'].ix[0]
+    pod = df2['POD'].ix[df2.index[0]]
     #new_dates = pd.to_datetime(pd.date_range(datetime.date(year, month, 1), datetime.date(year, month, calendar.monthrange(year, month)[1]), freq = 'D'))
     missing = [r for r in rid2 if not r in df2.Giorno.values.ravel().tolist()]
-### REMOVE SET --> USE A FOR LOOP, OTHERWOISE A LOOSE THE ORDER OF THE RECALENDARIZATION    
+### REMOVE SET --> USE A FOR LOOP, OTHERWISE A LOOSE THE ORDER OF THE RECALENDARIZATION    
     for md in missing:
         #prop = CurveEstimator(pod, md, crpp, db, zona)
         prop = np.repeat(0.0,24)
@@ -1325,6 +1325,7 @@ def MonthlyRical(month, zona, year, db):
                 else:
                     missing.append(p)
     RIC = RIC.set_index(pd.date_range(datetime.date(year, month, 1), datetime.date(year, month, calendar.monthrange(year, month)[1]) + datetime.timedelta(days = 1), freq = 'H')[:RIC.shape[0]])
+    RIC['Giorno'] = RIC.index.date
     RIC.to_excel('C:/Users/utente/Documents/Sbilanciamento/ric_' + strm + '_' + zona + '.xlsx')    
     return RIC, missing        
 ####################################################################################################

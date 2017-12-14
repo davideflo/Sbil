@@ -33,7 +33,7 @@ db = db[["POD", "Area", "Giorno", "1","2","3","4","5","6","7","8","9","10","11",
 db = db.drop_duplicates(subset = ['POD', 'Area', 'Giorno'], keep = 'last')
 
 #dtf = dts = [datetime.date(2017,11,1),datetime.date(2017,11,2)]
-dtf = dts = [datetime.date(2017,12,8)]
+dtf = dts = [datetime.date(2017,12,15)]
 
 
 for d in dtf:
